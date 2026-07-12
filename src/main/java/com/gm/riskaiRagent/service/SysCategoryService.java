@@ -14,6 +14,9 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+/**
+ * 知识分类服务，负责分类列表、新增、编辑、删除和存在性校验。
+ */
 @Service
 @RequiredArgsConstructor
 public class SysCategoryService {

@@ -14,6 +14,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Token 鉴权拦截器，解析 Authorization 头并把用户写入 AuthContext。
+ */
 @Component
 @RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
@@ -22,6 +25,9 @@ public class AuthInterceptor implements HandlerInterceptor {
     private final ObjectMapper objectMapper;
 
     @Override
+    /**
+     * 请求进入控制器前完成 Token 解析、登录校验和管理员权限校验。
+     */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
@@ -52,11 +58,17 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     @Override
+    /**
+     * 请求结束后清理 ThreadLocal，避免线程复用时串用用户身份。
+     */
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object handler, Exception ex) {
         AuthContext.clear();
     }
 
+    /**
+     * 从 Authorization: Bearer xxx 请求头中提取 Token。
+     */
     private String extractToken(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
@@ -65,6 +77,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         return null;
     }
 
+    /**
+     * 拦截器内直接写统一 JSON 响应，避免未登录请求继续进入控制器。
+     */
     private void writeJson(HttpServletResponse response, int status, Result<?> body) throws Exception {
         response.setStatus(status);
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());

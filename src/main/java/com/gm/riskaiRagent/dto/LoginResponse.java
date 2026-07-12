@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 登录响应体，返回访问 Token 和当前用户基础信息。
+ */
 @Data
 @Builder
 @NoArgsConstructor

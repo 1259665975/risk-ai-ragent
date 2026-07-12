@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 管理端知识分类接口，提供分类列表、新增、编辑和删除能力。
+ */
 @Tag(name = "AdminCategories")
 @RestController
 @RequestMapping("/api/admin/categories")

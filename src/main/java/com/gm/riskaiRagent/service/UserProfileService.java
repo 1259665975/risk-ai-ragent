@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+/**
+ * 用户资料服务，负责当前用户资料查询、资料更新和密码修改。
+ */
 @Service
 @RequiredArgsConstructor
 public class UserProfileService {

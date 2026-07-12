@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 管理端用户接口，提供用户列表、新增、编辑和删除能力。
+ */
 @Tag(name = "AdminUsers")
 @RestController
 @RequestMapping("/api/admin/users")

@@ -71,6 +71,9 @@ public class MultiHopRetrievalService {
         return multiHopRetrieve(question, categoryIds, cfg);
     }
 
+    /**
+     * 多跳检索主循环：原问题先召回，再基于上一跳片段生成补充查询并合并去重。
+     */
     private MultiHopRetrievalResult multiHopRetrieve(String question, List<Long> categoryIds,
                                                      RagProperties.MultiHop cfg) {
         int maxHops = Math.max(2, cfg.getMaxHops());
@@ -133,6 +136,9 @@ public class MultiHopRetrievalService {
                 .build();
     }
 
+    /**
+     * 单次向量检索的容错包装，避免某一跳失败中断整个问答链路。
+     */
     private List<Document> safeSearch(String query, List<Long> categoryIds, int topK) {
         try {
             return vectorStoreService.similaritySearch(query, categoryIds, topK);
@@ -142,6 +148,9 @@ public class MultiHopRetrievalService {
         }
     }
 
+    /**
+     * 生成下一跳补充查询，优先使用 LLM，失败或关闭时走模板兜底。
+     */
     private List<String> generateSubQueries(String question, List<Document> docs, RagProperties.MultiHop cfg) {
         int limit = Math.max(1, cfg.getSubQueriesPerHop());
         if (cfg.isUseLlmSubQuery()) {
@@ -198,6 +207,9 @@ public class MultiHopRetrievalService {
         return templates.stream().limit(limit).collect(Collectors.toList());
     }
 
+    /**
+     * 按文档 ID 或内容指纹去重，重复命中时保留分数更高的片段。
+     */
     private void mergeDocuments(Map<String, Document> merged, List<Document> incoming) {
         for (Document doc : incoming) {
             String key = documentKey(doc);

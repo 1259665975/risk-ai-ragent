@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 门户问答请求体，支持问题、分类过滤和引用返回控制。
+ */
 @Data
 public class PortalRagentRequest {
 

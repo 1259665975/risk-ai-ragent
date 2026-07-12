@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 用户端个人中心接口，提供资料查询、资料更新和密码修改。
+ */
 @Tag(name = "UserProfile")
 @RestController
 @RequestMapping("/api/user")

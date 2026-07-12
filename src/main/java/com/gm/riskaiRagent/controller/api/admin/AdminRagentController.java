@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 管理端问答测试接口，允许管理员指定分类范围验证 RAG 效果。
+ */
 @Tag(name = "AdminRagent")
 @RestController
 @RequestMapping("/api/admin/ragent")

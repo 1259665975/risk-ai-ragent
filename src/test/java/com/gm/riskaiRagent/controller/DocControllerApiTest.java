@@ -26,6 +26,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * 文档开放接口测试，验证上传校验、支持类型查询和清空接口行为。
+ */
 @ExtendWith(MockitoExtension.class)
 class DocControllerApiTest {
 

@@ -4,6 +4,9 @@ import com.gm.riskaiRagent.entity.SysUser;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 认证用户快照，只保存鉴权和角色判断所需的安全字段。
+ */
 @Getter
 @Setter
 public class AuthUser {

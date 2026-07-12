@@ -23,6 +23,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 用户会话服务，负责会话管理、历史消息读写和 RAG 问答落库。
+ */
 @Service
 @RequiredArgsConstructor
 public class ChatSessionService {
@@ -34,6 +37,9 @@ public class ChatSessionService {
     private final RagRagentService ragRagentService;
     private final ObjectMapper objectMapper;
 
+    /**
+     * 查询当前登录用户的会话列表，并补充每个会话的消息数量。
+     */
     public List<ChatSession> listSessions() {
         Long userId = AuthContext.userId();
         List<ChatSession> sessions = chatSessionMapper.selectList(new LambdaQueryWrapper<ChatSession>()
@@ -47,6 +53,9 @@ public class ChatSessionService {
         return sessions;
     }
 
+    /**
+     * 为当前用户创建新会话，未传标题时使用默认标题。
+     */
     public ChatSession createSession(String title) {
         ChatSession session = new ChatSession();
         session.setUserId(AuthContext.userId());
@@ -56,11 +65,17 @@ public class ChatSessionService {
         return session;
     }
 
+    /**
+     * 删除当前用户自己的会话，先做归属校验避免越权。
+     */
     public void deleteSession(Long id) {
         ChatSession session = requireOwnedSession(id);
         chatSessionMapper.deleteById(session.getId());
     }
 
+    /**
+     * 读取指定会话的历史消息，并反序列化每轮回答的引用片段。
+     */
     public List<ChatMessageVO> listMessages(Long sessionId) {
         requireOwnedSession(sessionId);
         return chatMessageMapper.selectList(new LambdaQueryWrapper<ChatMessage>()
@@ -71,6 +86,9 @@ public class ChatSessionService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 用户聊天主流程：调用 RAG 问答、保存消息，并用首问自动命名新会话。
+     */
     public RagentResponse chat(ChatRequest request) {
         ChatSession session = requireOwnedSession(request.getSessionId());
         RagentRequest ragentRequest = new RagentRequest();
@@ -96,6 +114,9 @@ public class ChatSessionService {
         return response;
     }
 
+    /**
+     * 会话归属校验，所有会话读写入口都必须先经过这里。
+     */
     private ChatSession requireOwnedSession(Long id) {
         if (id == null) {
             throw new BusinessException(ResultCode.BAD_REQUEST.getCode(), "sessionId 不能为空");

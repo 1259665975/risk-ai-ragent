@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 向量库服务，封装 Spring AI VectorStore 的写入、相似度检索和删除操作。
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,9 @@ public class VectorStoreService {
     private final VectorStore vectorStore;
     private final RagProperties ragProperties;
 
+    /**
+     * 批量写入切片到向量库，空集合直接跳过。
+     */
     public void add(List<Document> documents) {
         if (documents == null || documents.isEmpty()) {
             return;
@@ -52,6 +58,9 @@ public class VectorStoreService {
         return vectorStore.similaritySearch(builder.build());
     }
 
+    /**
+     * 按 chunk ID 从向量库删除片段，空集合直接跳过。
+     */
     public void delete(List<String> ids) {
         if (ids == null || ids.isEmpty()) {
             return;
@@ -60,6 +69,9 @@ public class VectorStoreService {
         log.info("Deleted {} chunks from vector store", ids.size());
     }
 
+    /**
+     * 把分类 ID 列表转换成 Milvus 过滤表达式。
+     */
     private String buildCategoryFilter(List<Long> categoryIds) {
         if (categoryIds == null || categoryIds.isEmpty()) {
             return null;

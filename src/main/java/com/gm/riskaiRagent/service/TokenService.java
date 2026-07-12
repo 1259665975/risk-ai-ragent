@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.UUID;
 
+/**
+ * Token 服务，使用 Redis 保存登录态并按 Token 反查认证用户。
+ */
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -18,6 +21,9 @@ public class TokenService {
 
     private final StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 生成随机 Token，并把用户 ID 与角色写入 Redis 登录态。
+     */
     public String createToken(SysUser user) {
         String token = UUID.randomUUID().toString().replace("-", "");
         stringRedisTemplate.opsForValue().set(
@@ -27,6 +33,9 @@ public class TokenService {
         return token;
     }
 
+    /**
+     * 按 Token 读取 Redis 登录态，解析为当前请求可用的 AuthUser。
+     */
     public AuthUser resolve(String token) {
         if (token == null || token.isBlank()) {
             return null;

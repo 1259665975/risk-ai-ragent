@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 知识分类实体，用于给文档和检索范围做业务分组。
+ */
 @Data
 @TableName("sys_category")
 public class SysCategory {

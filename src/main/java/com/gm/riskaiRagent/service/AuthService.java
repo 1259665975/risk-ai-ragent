@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * 认证服务，负责账号密码校验、Token 生成和用户信息转换。
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {

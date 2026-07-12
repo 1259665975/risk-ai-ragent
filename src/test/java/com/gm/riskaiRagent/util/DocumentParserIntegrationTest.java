@@ -19,6 +19,9 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * 文档解析集成测试，覆盖 Tika 和图片 OCR 路由等解析场景。
+ */
 @ExtendWith(MockitoExtension.class)
 class DocumentParserIntegrationTest {
 

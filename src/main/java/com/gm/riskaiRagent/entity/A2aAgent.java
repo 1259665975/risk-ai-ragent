@@ -5,18 +5,19 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-/**
- * 聊天会话实体，对应用户的一组连续问答历史。
- */
 @Data
-@TableName("chat_session")
-public class ChatSession {
+@TableName("a2a_agent")
+public class A2aAgent {
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private Long userId;
-    private String title;
+    private String agentId;
+    private String name;
+    private String description;
+    private String capabilities;
+    private String endpoint;
+    private String status;
 
     @TableLogic
     private Integer deleted;
@@ -26,7 +27,4 @@ public class ChatSession {
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
-
-    @TableField(exist = false)
-    private Integer messageCount;
 }

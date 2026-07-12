@@ -23,6 +23,9 @@ public class KeywordRetrievalService {
 
     private final ChunkIndexService chunkIndexService;
 
+    /**
+     * 遍历 Redis chunk 索引并计算 BM25 分数，返回关键词召回的 topK 文档。
+     */
     public List<Document> search(String query, List<Long> categoryIds, int topK) {
         if (query == null || query.isBlank()) {
             return List.of();
@@ -62,6 +65,9 @@ public class KeywordRetrievalService {
                 .toList();
     }
 
+    /**
+     * 把 Redis 索引记录转换成 Spring AI Document，便于后续与向量结果融合。
+     */
     private Document toDocument(ScoredDocument scored) {
         ChunkIndexService.ChunkIndexEntry chunk = scored.entry();
         return Document.builder()

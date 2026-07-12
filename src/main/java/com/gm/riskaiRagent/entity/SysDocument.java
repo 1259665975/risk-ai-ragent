@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 知识文档元数据实体，记录上传文件、分类、切片和状态信息。
+ */
 @Data
 @TableName("sys_document")
 public class SysDocument {

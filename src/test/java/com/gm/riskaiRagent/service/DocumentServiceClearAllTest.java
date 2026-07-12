@@ -20,6 +20,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * 知识库清空测试，验证全局 chunk 集合和按文档 chunk 集合都能被正确清理。
+ */
 @ExtendWith(MockitoExtension.class)
 class DocumentServiceClearAllTest {
 

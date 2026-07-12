@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 系统用户实体，保存登录账号、密码摘要、角色和基础资料。
+ */
 @Data
 @TableName("sys_user")
 public class SysUser {

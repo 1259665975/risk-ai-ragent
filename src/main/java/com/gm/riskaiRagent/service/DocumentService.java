@@ -40,10 +40,16 @@ public class DocumentService {
     private final ChunkIndexService chunkIndexService;
     private final StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * 使用默认分类执行文档入库，兼容开放上传接口。
+     */
     public IngestResponse ingest(MultipartFile file) throws IOException {
         return ingest(file, null);
     }
 
+    /**
+     * 完整入库流程：校验格式、解析正文、Token 切片、写入向量库、建立 Redis 关键词索引。
+     */
     public IngestResponse ingest(MultipartFile file, Long categoryId) throws IOException {
         String fileName = file.getOriginalFilename();
         SupportedDocumentTypes.validate(fileName);
@@ -104,6 +110,9 @@ public class DocumentService {
                 .build();
     }
 
+    /**
+     * 按业务文档 ID 删除所有关联 chunk，保持 Milvus、关键词索引和追踪集合一致。
+     */
     public void deleteByDocId(String docId) {
         if (docId == null || docId.isBlank()) {
             return;
@@ -118,6 +127,9 @@ public class DocumentService {
         }
     }
 
+    /**
+     * 清空知识库向量和 Redis 索引，用于重建知识库或测试环境重置。
+     */
     public long clearAll() {
         Set<String> allChunkIds = new HashSet<>();
 

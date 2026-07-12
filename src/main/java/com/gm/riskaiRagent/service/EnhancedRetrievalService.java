@@ -54,6 +54,9 @@ public class EnhancedRetrievalService {
         return finalizeWithRerank(query, fused, finalTopK, retrieval);
     }
 
+    /**
+     * 按配置决定是否启用混合召回；同时有向量和关键词结果时使用 RRF 融合排序。
+     */
     private List<Document> fuseCandidates(String query,
                                           List<Long> categoryIds,
                                           List<Document> vectorCandidates,
@@ -87,6 +90,9 @@ public class EnhancedRetrievalService {
         return fused;
     }
 
+    /**
+     * 检索收尾阶段：未开启 Rerank 时直接截断，开启后调用精排模型取最终 topK。
+     */
     private EnhancedRetrievalResult finalizeWithRerank(String query,
                                                        List<Document> fused,
                                                        int finalTopK,

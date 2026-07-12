@@ -21,6 +21,9 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * 增强检索测试，覆盖向量召回、关键词融合和 Rerank 开关下的编排结果。
+ */
 @ExtendWith(MockitoExtension.class)
 class EnhancedRetrievalServiceTest {
 

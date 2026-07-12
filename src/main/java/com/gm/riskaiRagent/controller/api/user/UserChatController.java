@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 用户端聊天接口，将用户问题写入会话并调用 RAG 服务生成答案。
+ */
 @Tag(name = "UserChat")
 @RestController
 @RequestMapping("/api/user")

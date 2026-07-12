@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 用户端会话接口，管理当前用户的聊天会话和历史消息。
+ */
 @Tag(name = "UserSessions")
 @RestController
 @RequestMapping("/api/user/sessions")

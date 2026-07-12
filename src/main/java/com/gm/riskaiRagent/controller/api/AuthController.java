@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 认证接口，处理账号密码登录并返回后续访问所需的 Token。
+ */
 @Tag(name = "Auth")
 @RestController
 @RequestMapping("/api/auth")

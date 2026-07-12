@@ -9,6 +9,9 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * BM25 关键词打分测试，验证相关文本获得更高分数。
+ */
 class KeywordScorerTest {
 
     @Test

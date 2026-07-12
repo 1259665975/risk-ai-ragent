@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * 文件类型白名单测试，验证支持格式、图片识别和扩展名解析。
+ */
 class SupportedDocumentTypesTest {
 
     @Test

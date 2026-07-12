@@ -79,10 +79,16 @@ public class RagRagentService {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * 开放问答入口，不限制知识分类范围。
+     */
     public RagentResponse ask(RagentRequest request) {
         return ask(request, null);
     }
 
+    /**
+     * 核心问答流程：缓存命中优先，未命中则检索上下文、调用模型、写缓存并记录日志。
+     */
     public RagentResponse ask(RagentRequest request, List<Long> categoryIds) {
         long start = System.currentTimeMillis();
         String traceId = UUID.randomUUID().toString().replace("-", "");
@@ -166,6 +172,9 @@ public class RagRagentService {
         return response;
     }
 
+    /**
+     * 把检索片段注入风控 System Prompt 后调用大模型生成答案。
+     */
     private String callModel(String question, List<Document> retrieved) {
         String context = buildContext(retrieved);
         List<Message> messages = new ArrayList<>();
@@ -177,6 +186,9 @@ public class RagRagentService {
         return chatResponse.getResult().getOutput().getText();
     }
 
+    /**
+     * 将候选知识片段拼成带序号和来源的上下文，供提示词约束模型引用。
+     */
     private String buildContext(List<Document> documents) {
         if (documents == null || documents.isEmpty()) {
             return "";
@@ -194,6 +206,9 @@ public class RagRagentService {
         return sb.toString();
     }
 
+    /**
+     * 把检索文档转换为前端引用列表，同一 source 只保留一次以避免重复展示。
+     */
     private List<ReferenceChunk> toReferences(List<Document> documents) {
         if (documents == null || documents.isEmpty()) {
             return Collections.emptyList();
@@ -217,6 +232,9 @@ public class RagRagentService {
 
     // ---- cache helpers ----
 
+    /**
+     * 缓存键包含问题、分类范围和检索策略开关，避免不同策略复用旧答案。
+     */
     private String buildCacheKey(String question, List<Long> categoryIds) {
         String raw = question;
         if (categoryIds != null && !categoryIds.isEmpty()) {

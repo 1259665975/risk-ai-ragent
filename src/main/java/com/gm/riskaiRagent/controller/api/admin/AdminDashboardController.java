@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 管理端仪表盘接口，汇总用户、文档、分类和问答统计数据。
+ */
 @Tag(name = "AdminDashboard")
 @RestController
 @RequestMapping("/api/admin/dashboard")

@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 用户聊天请求体，包含会话 ID、问题、分类过滤和引用返回开关。
+ */
 @Data
 public class ChatRequest {
 

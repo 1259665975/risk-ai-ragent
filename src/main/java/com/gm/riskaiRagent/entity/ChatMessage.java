@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 聊天消息实体，对应用户会话中的单轮问答记录。
+ */
 @Data
 @TableName("chat_message")
 public class ChatMessage {

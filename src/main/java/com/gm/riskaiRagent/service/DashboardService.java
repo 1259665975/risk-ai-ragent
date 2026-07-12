@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 仪表盘服务，聚合用户、文档、分类和问答日志的统计数据。
+ */
 @Service
 @RequiredArgsConstructor
 public class DashboardService {

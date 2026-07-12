@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+/**
+ * 管理端文档接口，负责分类文档分页、上传入库和删除。
+ */
 @Tag(name = "AdminDocuments")
 @RestController
 @RequestMapping("/api/admin/documents")

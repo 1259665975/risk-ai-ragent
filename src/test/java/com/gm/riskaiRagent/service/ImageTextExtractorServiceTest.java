@@ -18,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * 图片 OCR 服务测试，验证视觉模型响应能被提取为可入库文本。
+ */
 @ExtendWith(MockitoExtension.class)
 class ImageTextExtractorServiceTest {
 

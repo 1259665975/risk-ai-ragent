@@ -8,6 +8,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * RRF 融合工具测试，验证多路召回排序可以稳定合并。
+ */
 class ReciprocalRankFusionTest {
 
     @Test

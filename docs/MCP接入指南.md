@@ -28,13 +28,31 @@
 {
   "mcpServers": {
     "risk-ai-ragent": {
-      "url": "http://localhost:8080/sse"
+	  "type": "sse",
+      "url": "http://localhost:8080"
     }
   }
 }
 ```
 
 > 部分 MCP 客户端使用 `type: "sse"` 或 Streamable HTTP，以客户端文档为准。Spring AI 1.0 默认提供 **SSE** 传输。
+
+~~~
+现象根因（Cursor SSE 客户端底层行为）
+Cursor 建立 MCP 连接完整流程：
+GET /sse → 创建 SSE 长连接，接收sessionId ✅
+Cursor额外自动预探 / 重试发送 POST /sse（这是 Cursor 自身错误逻辑）
+✅ 存在@PostMapping("/sse") → 返回405 Method Not Allowed，客户端识别：路径存在，只是方法不对，继续正常走后续消息流程
+❌ 删除 Controller 后 → POST /sse 返回404 Not Found
+Cursor 判定服务地址不可用，直接主动断开刚建立好的 SSE 通道，导致连接失败、变黄灯。
+重点区分：
+405 = 资源存在，请求方式错误 → Cursor不会判定服务失效
+404 = 路径不存在 → Cursor 直接判定服务异常，掐断连接
+
+> 部分 MCP 客户端使用 `type: "sse"` 或 Streamable HTTP，以客户端文档为准。Spring AI 1.0 默认提供 **SSE** 传输。
+~~~
+
+![image-20260712164923521](C:\Users\q1259\AppData\Roaming\Typora\typora-user-images\image-20260712164923521.png)
 
 ## Claude Desktop 配置示例（可选）
 
@@ -76,6 +94,15 @@ spring:
 | `askRiskQuestion` | 走 `RagRagentService`，受 `risk-ai.multi-hop.enabled` 控制 |
 
 详见 [多跳检索指南.md](多跳检索指南.md)。
+
+## 与 A2A 协议的关系
+
+| 能力 | 说明 |
+|------|------|
+| **MCP** | 单 Agent 对外暴露工具（检索、问答等），供 Cursor 等客户端调用 |
+| **A2A** | 多 Agent 注册、发现、消息路由与任务追踪，供平台内 Agent 协同 |
+
+可将 MCP SSE 地址（`http://localhost:8080/sse`）注册为 A2A Agent 的 endpoint。详见 [A2A协议指南.md](A2A协议指南.md)。
 
 ## 注意事项
 

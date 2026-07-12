@@ -1,5 +1,8 @@
 package com.gm.riskaiRagent.security;
 
+/**
+ * 当前请求认证上下文，使用 ThreadLocal 保存拦截器解析出的登录用户。
+ */
 public final class AuthContext {
 
     private static final ThreadLocal<AuthUser> HOLDER = new ThreadLocal<>();

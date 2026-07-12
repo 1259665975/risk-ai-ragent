@@ -11,6 +11,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * 系统启动数据初始化器，在空库时创建默认用户、分类等基础数据。
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

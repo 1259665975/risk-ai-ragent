@@ -86,3 +86,35 @@ CREATE TABLE IF NOT EXISTS chat_message (
     PRIMARY KEY (id),
     KEY idx_session (session_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Chat messages';
+
+CREATE TABLE IF NOT EXISTS a2a_agent (
+    id            BIGINT       NOT NULL AUTO_INCREMENT,
+    agent_id      VARCHAR(64)  NOT NULL,
+    name          VARCHAR(100) NOT NULL,
+    description   VARCHAR(500)          DEFAULT NULL,
+    capabilities  TEXT         NOT NULL,
+    endpoint      VARCHAR(255) NOT NULL,
+    status        VARCHAR(32)  NOT NULL DEFAULT 'ACTIVE',
+    deleted       TINYINT      NOT NULL DEFAULT 0,
+    created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_agent_id (agent_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='A2A agents';
+
+CREATE TABLE IF NOT EXISTS a2a_task (
+    id               BIGINT       NOT NULL AUTO_INCREMENT,
+    task_id          VARCHAR(64)  NOT NULL,
+    from_agent_id    VARCHAR(64)  NOT NULL,
+    to_agent_id      VARCHAR(64)  NOT NULL,
+    message          TEXT         NOT NULL,
+    status           VARCHAR(32)  NOT NULL DEFAULT 'PENDING',
+    detail_message   VARCHAR(512)          DEFAULT NULL,
+    deleted          TINYINT      NOT NULL DEFAULT 0,
+    created_at       DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at       DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_task_id (task_id),
+    KEY idx_from_agent (from_agent_id),
+    KEY idx_to_agent (to_agent_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='A2A tasks';
